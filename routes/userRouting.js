@@ -8,12 +8,17 @@ const assetPath = path.join(__dirname,'../public')
 userRouter.use(urlencoded({extended:true}))
 userRouter.use(static(assetPath))
 
-userRouter.get('/')
-userRouter.get('/:username')
-userRouter.get('/:username/:userId')
-userRouter.get('/create')
 
-userRouter.post('/create')
+userRouter.get('/',userController.getAllUsers);
+userRouter.get('/search',userController.getSearchResult);
+userRouter.get('/create',userController.getCreateForm);
+userRouter.get('/:userId',userController.getSingleUser);
+userRouter.get('/:userId/update',userController.getUpdateForm)
+
+userRouter.post('/create',userController.createNewUser)
+userRouter.post('/:userId/update',userController.updateUser)
+userRouter.post('/:userId/delete',userController.deleteUser)
+
 
 
 module.exports = userRouter

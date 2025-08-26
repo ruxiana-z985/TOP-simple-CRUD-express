@@ -17,7 +17,13 @@ class userStorage{
 
         return users
     }
-   
+    
+    getSingeUser(userId){
+        if (userId in this.#storage){
+            return this.#storage[userId]
+        }
+        return {}
+    }
 
     createUser(firstname,lastname){
         try
