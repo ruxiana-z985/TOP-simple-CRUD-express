@@ -6,10 +6,23 @@
     <title>Errors</title>
 </head>
 <body>
-   <ul>
-    <% for(let i = 0; i < error.length ; i++) {%>
-        <li><%= error[i] %></li>
+    <% if(!clientError.length == 0){ %>
+        <h1>Client Error</h1>
+        <ul>
+           <% for(let i = 0; i < clientError.length; i++){ %>
+            <li><%= clientError[i].msg %></li>
+            <% } %>
+        </ul>
     <% } %>
-   </ul>
+    
+    <% if(!serverError.length == 0){ %>
+        <h1>Server Error</h1>
+        <ul>
+           <% for(let i = 0; i < serverError.length; i++){ %>
+            <li><%= serverError[i].message %></li>
+            <% } %>
+        </ul>
+    <% } %>
+   <ul>
 </body>
 </html>

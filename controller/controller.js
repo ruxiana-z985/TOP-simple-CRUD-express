@@ -48,14 +48,16 @@ function getSingleUser(req,res){
 const createNewUser = ((req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        res.status(400).render('error',{error:errors.array()})
+        let clientError = errors.array();
+        let serverError =[]
+        res.status(400).render('error',{clientError,serverError})
     }
     else{
     const firstname = req.body.firstname
     const lastname = req.body.lastname
     const confirmObj = db.createUser(firstname,lastname)
     if(!confirmObj.isSuccess){
-        res.status(500).render('error',{error:[confirmObj.message]})
+        res.status(500).render('error',{clientError:[],serverError:[confirmObj.message]})
     }
     else{
         res.redirect('/user')
@@ -69,7 +71,9 @@ const createNewUser = ((req,res)=>{
 const updateUser = ((req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        res.render('errors',{error:errors.array()})
+       let clientError = errors.array();
+        let serverError =[]
+        res.status(400).render('error',{clientError,serverError})
         
     }else{
     const userId = req.params.userId;
@@ -78,7 +82,10 @@ const updateUser = ((req,res)=>{
 
     const confirmObj = db.updateUser(userId,fname,lname)
     if(!confirmObj.isSuccess){
-        res.status(500).render('error',{error:[confirmObj.message]})
+        let clientError = [];
+        let serverError =[confirmObj.message]
+       
+        res.status(500).render('error',{clientError,serverError})
     }
 
     res.status(303).redirect('/users')
@@ -91,7 +98,10 @@ function deleteUser(req,res){
     const userId = req.params.userId
     const confirmObj = db.deleteUser(userId);
     if(!confirmObj.isSuccess){
-        res.status(500).render('error',{error:[confirmObj.message]})
+        let clientError = [];
+        let serverError =[confirmObj.message]
+       
+        res.status(500).render('error',{clientError,serverError})    
     }
 
     res.status(303).redirect('/');//needs to make sure the status code is right
