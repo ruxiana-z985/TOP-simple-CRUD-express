@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+</head>
+<body>
+    <header>
+        <a href="create">
+            <button>Add User</button>
+        </a>
+        
+    </header>
+    <div class="searchForm-container">
+        <form id="searchForm" action="search" method="GET">
+            <input type="text" name="username">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="users-container">
+        <% if(!Object.keys(allUsers).length == 0){ %>
+        <% for(let key in allUsers ){ %>
+           
+            <div class="user-info-container">
+                <p>First-name: <%= allUsers[key].firstname %></p>
+                <p>Last-name: <%= allUsers[key].lastname %></p>
+                <form action="<%= key %>/delete" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+                <a href="<%= key %>/update">
+                    <button>Update User</button>
+                </a>
+                <a href="<%= key %>">
+                    <button>View User Info</button>
+
+                </a>
+            </div>
+            
+        <% } %>
+        <% }  else {%>
+            <p>No users yet</p>
+            <% } %>
+    </div>
+</body>
+</html>

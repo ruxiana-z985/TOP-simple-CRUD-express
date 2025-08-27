@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <div class="form-container">
+        <form id="createNewForm" action="create" method="POST">
+            <label for = "fname">First Name</label>
+            <input type="text" id="fname" name="firstname" required>
+
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lastname" required>
+
+            <button type="submit">Add User</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -15,10 +15,10 @@ userRouter.get('/create',userController.getCreateForm);
 userRouter.get('/:userId',userController.getSingleUser);
 userRouter.get('/:userId/update',userController.getUpdateForm)
 
-userRouter.post('/create',userController.createNewUser)
-userRouter.post('/:userId/update',userController.updateUser)
+userRouter.post('/create',userController.validateUser(),userController.createNewUser)
+userRouter.post('/:userId/update',userController.validateUser(),userController.updateUser)
 userRouter.post('/:userId/delete',userController.deleteUser)
 
 
 
-module.exports = userRouter
+module.exports = {userRouter}

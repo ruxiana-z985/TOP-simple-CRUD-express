@@ -5,13 +5,15 @@ const path = require('path')
 
 require('dotenv').config()
 const {userRouter} = require('./routes/userRouting');
-
+ console.log(typeof userRouter);
 app.set('views',path.join(__dirname,'view'))
 app.set('view engine','ejs')
-
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname,'landingPage.html'))
+})
 app.use('/user{s}',userRouter)
 app.use((req,res)=>{
-    res.sendFile(path.join(__dirname,'landingPage.html'))
+    res.status(404).send("page not found")
 })
 
 

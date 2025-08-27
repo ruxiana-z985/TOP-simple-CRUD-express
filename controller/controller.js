@@ -22,12 +22,12 @@ function validateUser(){
 
 function getAllUsers(req,res){
     const allUsers = db.getAllUsers()
-    res.render('index',allUsers)
+    res.render('index',{allUsers})
 }
 
 function getSearchResult(req,res){
   const users = db.searchUser(req.query.username);
-  res.render('searchResult',users)
+  res.render('searchResult',{users})
 }
 
 function getSingleUser(req,res){
@@ -45,7 +45,7 @@ function getSingleUser(req,res){
 
 }
 
-const createNewUser = (validateUser,(req,res)=>{
+const createNewUser = ((req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         res.status(400).render('error',{error:errors.array()})
@@ -56,11 +56,11 @@ const createNewUser = (validateUser,(req,res)=>{
     if(!confirmObj.isSuccess){
         res.status(500).render('error',{error:[confirmObj.message]})
     }
-    res.redirect('/')
+    res.redirect('/user')
 
 })
 
-const updateUser = (validateUser,(req,res)=>{
+const updateUser = ((req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         res.render('errors',{error:errors.array()})
@@ -91,7 +91,7 @@ function deleteUser(req,res){
 
 function getCreateForm(req,res){
   try {
-    res.render('createForm')
+    res.render('createForm',{title:"New User Form"})
   } catch (error) {
     res.status(404).render('err',{error:["page not found"]})
   }
@@ -111,5 +111,6 @@ module.exports = {
     createNewUser,
     getUpdateForm,
     updateUser,
-    deleteUser
+    deleteUser,
+    validateUser
 }
