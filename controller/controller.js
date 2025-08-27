@@ -27,7 +27,7 @@ function getAllUsers(req,res){
 
 function getSearchResult(req,res){
   const users = db.searchUser(req.query.username);
-  res.render('searchResult',{users})
+  res.render('searchResult',{username:req.query.username,users:users})
 }
 
 function getSingleUser(req,res){
@@ -50,13 +50,19 @@ const createNewUser = ((req,res)=>{
     if(!errors.isEmpty()){
         res.status(400).render('error',{error:errors.array()})
     }
+    else{
     const firstname = req.body.firstname
     const lastname = req.body.lastname
     const confirmObj = db.createUser(firstname,lastname)
     if(!confirmObj.isSuccess){
         res.status(500).render('error',{error:[confirmObj.message]})
     }
-    res.redirect('/user')
+    else{
+        res.redirect('/user')
+    }
+    }
+    
+   
 
 })
 
@@ -64,8 +70,8 @@ const updateUser = ((req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         res.render('errors',{error:errors.array()})
-    }
-
+        
+    }else{
     const userId = req.params.userId;
     const fname = req.body.firstname;
     const lname = req.body.lastname;
@@ -75,7 +81,10 @@ const updateUser = ((req,res)=>{
         res.status(500).render('error',{error:[confirmObj.message]})
     }
 
-    res.status(303).redirect('/')
+    res.status(303).redirect('/users')
+    }
+
+    
 })
 
 function deleteUser(req,res){
@@ -100,7 +109,7 @@ function getCreateForm(req,res){
 function getUpdateForm(req,res){
    const userId = req.params.userId;
    const prevUserInfo = db.getSingeUser(userId);
-   res.render('updateUser',prevUserInfo);
+   res.render('updateUser',{user:prevUserInfo});
 }
 
 module.exports = {
